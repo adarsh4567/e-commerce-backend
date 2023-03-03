@@ -1,12 +1,15 @@
 require("dotenv").config();
 const express = require("express");
-const app = express();
-const mongoose = require("mongoose");
+const app = express()
+const cors = require('cors')
+const router = require('./routes/routes')
 require("./db/connection");
+app.use(express.json());
+app.use(cors())
+app.use(router)
 
-const Products = require("./models/productsSchema");
 
-const port = 8005;
+const port = 8000;
 
 app.listen(port, () => {
     console.log(`server is running on port number ${port}`)
