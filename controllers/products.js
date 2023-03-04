@@ -1,8 +1,15 @@
 const express = require('express')
-const products = require('../constant/productsdata')
+const Products = require('../models/productsSchema')
 
 const getProducts = async(req,res)=>{
-    res.status(200).json(products)
+    const products = await Products.find();
+    res.status(201).json(products)
 }
 
-module.exports = getProducts
+const getOneProduct = async(req,res)=>{
+    const {id} = req.params;
+    const data = await Products.findOne({id})
+    res.status(201).json(data)
+}
+
+module.exports = {getProducts,getOneProduct}
