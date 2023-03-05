@@ -6,10 +6,5 @@ const getProducts = async(req,res)=>{
     res.status(201).json(products)
 }
 
-const getOneProduct = async(req,res)=>{
-    const {id} = req.params;
-    const data = await Products.findOne({id})
-    res.status(201).json(data)
-}
 
-module.exports = {getProducts,getOneProduct}
+module.exports = getProducts
