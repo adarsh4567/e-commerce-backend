@@ -1,4 +1,4 @@
-const express = require('express')
+
 const Products = require('../models/productsSchema')
 
 const getProducts = async(req,res)=>{
