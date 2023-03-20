@@ -9,4 +9,6 @@ router.get('/getProducts',getProducts);
 
 router.post("/register",register);
 
-module.exports =router
+router.post("/login", login);
+
+module.exports = router
