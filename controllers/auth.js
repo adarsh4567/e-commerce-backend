@@ -1,4 +1,6 @@
 const User = require('../models/userSchema');
+const router = require('../routes/routes');
+const bcrypt = require("bcryptjs");
 
 
 const register =  async(req, res) => {
@@ -27,6 +29,31 @@ const register =  async(req, res) => {
     }catch(error){
         res.status(401).json({message:error})
     }
-}
+};
 
-module.exports = register
+ const login =  async(req, res) => {
+    const {email, password} = req.body;
+
+    if(!email || !password){
+        res.status(400).json({error: "Fill all the data"})
+    }
+
+    try {
+        const userLogin = await User.findOne({email : email});
+
+        if(userLogin){
+            const isMatch = await bcrypt.compare(password, userLogin.password);
+            console.log(isMatch);
+
+            if(!isMatch){
+                res.status(400).json({error : "invalid details"})
+            }else{
+                res.status(201).json({message : "password match"})
+            }
+        }
+    } catch (error) {
+        res.status(400).json({error : "invalid details"})
+    }
+};
+
+module.exports = {register, login}
