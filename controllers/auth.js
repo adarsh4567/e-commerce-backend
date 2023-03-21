@@ -1,5 +1,4 @@
 const User = require('../models/userSchema');
-const router = require('../routes/routes');
 const bcrypt = require("bcryptjs");
 
 
@@ -43,16 +42,15 @@ const register =  async(req, res) => {
 
         if(userLogin){
             const isMatch = await bcrypt.compare(password, userLogin.password);
-            console.log(isMatch);
-
+            console.log(userLogin);
             if(!isMatch){
                 res.status(400).json({error : "invalid details"})
             }else{
-                res.status(201).json({message : "password match"})
+                res.status(201).json(userLogin)
             }
         }
     } catch (error) {
-        res.status(400).json({error : "invalid details"})
+        res.status(400).json({error : "Error is there"})
     }
 };
 
