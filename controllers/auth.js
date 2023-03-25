@@ -42,12 +42,22 @@ const register =  async(req, res) => {
 
         if(userLogin){
             const isMatch = await bcrypt.compare(password, userLogin.password);
-            console.log(userLogin);
+           // console.log(userLogin);
+           const token = await userLogin.generateAuthtoken();
+           // console.log(token);
+
+           res.cookie("EcartWeb", token,{
+            expires : new Date(Date.now + 900000),
+            httpOnly : true
+           })
+
             if(!isMatch){
                 res.status(400).json({error : "invalid details"})
             }else{
                 res.status(201).json(userLogin)
             }
+        } else{
+            res.status(400).json({error : "invalid details"})
         }
     } catch (error) {
         res.status(400).json({error : "Error is there"})

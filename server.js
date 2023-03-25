@@ -6,7 +6,11 @@ const router = require('./routes/routes');
 const Products = require("./models/productsSchema");
 const products = require("./constant/productsdata");
 require("./db/connection");
+const cookieParser = require("cookie-parser");
+
+//middleware
 app.use(express.json());
+app.use(cookieParser(""));
 app.use(cors())
 app.use(router)
 
