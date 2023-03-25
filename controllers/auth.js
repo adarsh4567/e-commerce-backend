@@ -42,12 +42,12 @@ const register =  async(req, res) => {
 
         if(userLogin){
             const isMatch = await bcrypt.compare(password, userLogin.password);
-           // console.log(userLogin);
-           const token = await userLogin.generateAuthtoken();
+        //    console.log(userLogin);
+           const token = await userLogin.generateAuthToken();
            // console.log(token);
 
            res.cookie("EcartWeb", token,{
-            expires : new Date(Date.now + 900000),
+            expires : new Date(Date.now() + 900000),
             httpOnly : true
            })
 
