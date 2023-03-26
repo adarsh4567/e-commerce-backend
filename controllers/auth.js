@@ -46,7 +46,7 @@ const register =  async(req, res) => {
            const token = await userLogin.generateAuthToken();
            // console.log(token);
 
-           res.cookie("EcartWeb", token,{
+           res.cookie("token", token,{
             expires : new Date(Date.now() + 900000),
             httpOnly : true
            })
