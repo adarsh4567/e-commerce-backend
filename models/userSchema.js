@@ -45,7 +45,7 @@ userSchema.pre("save", async function (next) {
 });
 
 //token generation
-userSchema.methods.generateAuthtoken = async function(){
+userSchema.methods.generateAuthToken = async function(){
     try {
         let token = jwt.sign({_id:this._id}, secretKey);
         this.tokens = this.tokens.concat({token:token});
@@ -54,6 +54,19 @@ userSchema.methods.generateAuthtoken = async function(){
     } catch (error) {
         console.log(error);
     }
+}
+
+// addToCart
+
+userSchema.methods.addToCart = async function(cart){
+    try {
+        this.carts = this.carts.concat(cart)
+        await this.save()
+        return this.carts
+    } catch (error) {
+        throw new Error(error)
+    }
+
 }
 
 const User = new mongoose.model("USER", userSchema);
