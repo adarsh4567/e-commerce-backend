@@ -14,17 +14,17 @@ const getProducts = async(req,res)=>{
 const addToCart = async(req,res)=>{
     try {
         const {id} = req.params
-        const cart = Products.findOne({id:id})
-        console.log(cart);
+        const product = await Products.findOne({id:id})
+        // console.log(product);  got product
 
-        const user = User.findOne({_id:req.userId})
+        const user = await User.findOne({_id:req.userId})
 
-        console.log(user);
+        // console.log(user);  // got user who added the product
 
         if(user){
-            const cartData = await user.addToCart(cart)
+            const cartData = await user.addToCart(product)   // adding product to the cart of user (User Schema)
             await user.save()
-            console.log(cartData);
+            // console.log(cartData);   
             res.status(201).json(user)
         }else{
             res.status(401).json({error:'Invalid user'})
