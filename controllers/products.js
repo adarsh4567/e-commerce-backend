@@ -34,8 +34,26 @@ const addToCart = async(req,res)=>{
     }
 }
 
+const removeProduct = async(req,res)=>{
+    try {
+        const {id} = req.params
+
+
+        const user = await User.findOne({_id:req.body.userId})
+
+        if(user){
+            const cartData = await user.removeFromCart(id)
+            await user.save()
+
+            res.status(201).json(user)
+        }
+    } catch (error) {
+         res.status(401).json(error)        
+    }
+}
 
 module.exports = {
     getProducts,
+    removeProduct,
     addToCart
 }
